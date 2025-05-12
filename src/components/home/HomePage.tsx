@@ -1,26 +1,21 @@
-import React from 'react'
-import HeaderArea from "./hero/HeaderArea";
 import HeroSection from './hero/HeroSection';
-import BannerArea from './hero/BannerArea';
-import ProductGridA from './products/ProductGrid';
-import ProductShowcase from './products/ProductShowcase';
+import ProductsGrids from "./products/ProductGrid";
 import Bestsellers from './products/BestSellers';
 import RecentlyViewed from './products/RecentlyVieswed';
 import ProductShowcaseTabs from './products/ProductShowcaseTable';
+import SearchHeader from './hero/SearchHeader';
 
 const HomePage = () => {
   return (
     <div>
-      <HeaderArea />
+      <SearchHeader />
       <HeroSection />
-      <BannerArea />
-      <ProductGridA />
-      <ProductShowcase />
+      <ProductsGrids />
       <Bestsellers />
       <RecentlyViewed />
       <ProductShowcaseTabs />
     </div>
-  )
+  );
 }
 
 export default HomePage
