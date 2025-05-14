@@ -1,116 +1,95 @@
-import React from "react";
+import { BadgeJapaneseYen, PinIcon } from "lucide-react";
 
-import { Smile, Rss, Globe } from "lucide-react";
-
-//import { Link } from "react-router-dom";
 
 const FooterLayout = () => {
   return (
-    <footer className="text-gray-700 text-sm font-medium">
-      {/* Newsletter Signup */}
-      <div className="bg-yellow-400 px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-4">
-        <p className="text-black font-semibold">
-          ✉️ Sign up to Newsletter
-          <span className="font-normal ml-2 text-sm text-gray-900">
-            ...and receive <strong>$20 coupon</strong> for first shopping.
-          </span>
-        </p>
-        <div className="flex">
-          <input
-            type="email"
-            placeholder="Enter your email address"
-            className="px-4 py-2 rounded-l-full border border-gray-300 w-64"
-          />
-          <button className="px-4 py-2 bg-gray-800 text-white rounded-r-full">
-            Sign Up
-          </button>
-        </div>
-      </div>
+    <>
+      <footer className="relative z-10 bg-white pb-10 pt-20 dark:bg-dark lg:pb-20 lg:pt-[120px]">
+        <div className="container">
+          <div className="-mx-4 flex flex-wrap">
+            <div className="w-full px-4 sm:w-2/3 lg:w-3/12">
+              <div className="mb-10 w-full">
+              </div>
+            </div>
 
-      {/* Main Footer */}
-      <div className="px-6 py-10 bg-white border-t border-gray-200 grid grid-cols-1 md:grid-cols-4 gap-8">
-        {/* Logo & Contact Info */}
-        <div className="space-y-3">
-          <h2 className="text-3xl font-bold text-gray-900">
-            electro<span className="text-yellow-400">.</span>
-          </h2>
-          <p className="text-gray-600">
-            Got questions? Call us 24/7!
-            <br />
-            <strong>(800) 8001-8588, (0600) 874 548</strong>
-          </p>
-          <p className="text-gray-600">
-            <strong>Contact info</strong>
-            <br />
-            17 Princess Road, London, Greater London NW1 8JR, UK
-          </p>
-        </div>
+            <LinkGroup header="Resources">
+              <NavLink link="/#" label="SaaS Development" />
+              <NavLink link="/#" label="Our Products" />
+              <NavLink link="/#" label="User Flow" />
+              <NavLink link="/#" label="User Strategy" />
+            </LinkGroup>
+            <LinkGroup header="Company">
+              <NavLink link="/#" label="About TailGrids" />
+              <NavLink link="/#" label="Contact & Support" />
+              <NavLink link="/#" label="Success History" />
+              <NavLink link="/#" label="Setting & Privacy" />
+            </LinkGroup>
+            <LinkGroup header="Quick Links">
+              <NavLink link="/#" label="Premium Support" />
+              <NavLink link="/#" label="Our Services" />
+              <NavLink link="/#" label="Know Our Team" />
+              <NavLink link="/#" label="Download App" />
+            </LinkGroup>
 
-        {/* Find it Fast */}
-        <div>
-          <h3 className="font-semibold mb-3">Find it Fast</h3>
-          <ul className="space-y-2 text-gray-600">
-            <li>Laptops & Computers</li>
-            <li>Cameras & Photography</li>
-            <li>Smart Phones & Tablets</li>
-            <li>Video Games & Consoles</li>
-            <li>TV & Audio</li>
-            <li>Gadgets</li>
-            <li>Car Electronic & GPS</li>
-            <li>Printers & Ink</li>
-            <li>Software</li>
-            <li>Office Supplies</li>
-            <li>Computer Components</li>
-            <li>Accessories</li>
-          </ul>
-        </div>
-
-        {/* Customer Care */}
-        <div>
-          <h3 className="font-semibold mb-3">Customer Care</h3>
-          <ul className="space-y-2 text-gray-600">
-            <li>My Account</li>
-            <li>Order Tracking</li>
-            <li>Wish List</li>
-            <li>Customer Service</li>
-            <li>Returns / Exchange</li>
-            <li>FAQs</li>
-            <li>Product Support</li>
-          </ul>
-        </div>
-
-        {/* Social Media Icons */}
-        <div className="space-y-4">
-          <h3 className="font-semibold">Connect With Us</h3>
-          <div className="flex items-center gap-4 text-gray-600">
-            <Smile className="w-5 h-5" />
-            <Smile className="w-5 h-5" />
-            <Rss className="w-5 h-5" />
-            <Smile className="w-5 h-5" />
-            <Globe className="w-5 h-5" />
-            <Smile className="w-5 h-5" />
+            <div className="w-full px-4 sm:w-1/2 lg:w-3/12">
+              <div className="mb-10 w-full">
+                <h4 className="mb-9 text-lg font-semibold text-dark dark:text-white">
+                  Follow Us On
+                </h4>
+                <div className="mb-6 flex items-center">
+                   <BadgeJapaneseYen />
+                   <PinIcon />
+                    <BadgeJapaneseYen />
+                   <PinIcon />
+                </div>
+                <p className="text-base text-body-color dark:text-dark-6">
+                  &copy; 2025 TailGrids
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-
-      {/* Bottom Footer */}
-      <div className="bg-gray-100 px-6 py-4 flex flex-col md:flex-row items-center justify-between text-xs text-gray-600">
-        <p>
-          © <strong>Electro</strong> – All rights reserved
-        </p>
-        <div className="flex gap-4 mt-2 md:mt-0">
-          <img
-            src="https://placehold.co/400"
-            alt="MasterCard"
-            className="h-6"
-          />
-          <img src="https://placehold.co/400" alt="Visa" className="h-6" />
-          <img src="https://placehold.co/400" alt="PayPal" className="h-6" />
-          <img src="https://placehold.co/400" alt="Maestro" className="h-6" />
+        <div>
+          <span className="absolute bottom-0 left-0 z-[-1]">
+           
+          </span>
+          <span className="absolute right-10 top-10 z-[-1]">
+           
+          </span>
         </div>
-      </div>
-    </footer>
+      </footer>
+    </>
   );
 };
 
 export default FooterLayout;
+
+
+
+const LinkGroup = ({ children, header }) => {
+  return (
+    <>
+      <div className="w-full px-4 sm:w-1/2 lg:w-2/12">
+        <div className="mb-10 w-full">
+          <h4 className="mb-9 text-lg font-semibold text-dark dark:text-white">
+            {header}
+          </h4>
+          <ul className="space-y-3">{children}</ul>
+        </div>
+      </div>
+    </>
+  );
+};
+
+const NavLink = ({ link, label }) => {
+  return (
+    <li>
+      <a
+        href={link}
+        className="inline-block text-base leading-loose text-body-color hover:text-primary dark:text-dark-6"
+      >
+        {label}
+      </a>
+    </li>
+  );
+};

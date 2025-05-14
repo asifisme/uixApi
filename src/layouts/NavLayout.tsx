@@ -1,118 +1,111 @@
-import { Link, useNavigate } from "react-router-dom";
-import {
-  Phone,
-  Mail,
-  MapPinCheckInside,
-  Bus,
-  Menu,
-  ShoppingBag,
-} from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { IceCream, Search } from "lucide-react";
+import { IoPerson } from "react-icons/io5";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
-const NavLayout = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const navigate = useNavigate();
+function NavLayout() {
+  const [isSignIn, setIsSignIn] = useState<boolean>(false);
+
+  const checkAuthStatus = () => {
+    const token = localStorage.getItem("access");
+    setIsSignIn(!!token);
+  };
 
   useEffect(() => {
-    const token = localStorage.getItem("access");
-    setIsLoggedIn(!!token);
-  }, []); // Check token on mount
+    checkAuthStatus();
+  }, []);
 
-  const handleLogout = () => {
+  const handleSignOut = () => {
     localStorage.removeItem("access");
-    localStorage.removeItem("refresh");
-    setIsLoggedIn(false); 
-    navigate("/signin");
+    setIsSignIn(false);
   };
 
   return (
-    <div className="w-full bg-[#f7f0f0] text-sm font-medium text-gray-700 shadow-sm">
-      {/* Mobile: Visible on small screens */}
-      <div className="flex justify-between items-center px-4 py-2 md:hidden">
-        <button
-          aria-label="Open menu"
-          className="focus:outline-none"
-          // Add onClick handler for menu toggle if needed
-        >
-          <Menu className="w-5 h-5" />
-        </button>
-        <Link to="/" className="flex items-center gap-2">
-          <ShoppingBag className="w-5 h-5" aria-hidden="true" />
-          <span className="font-semibold">rasCart</span>
-        </Link>
-      </div>
-
-      {/* Desktop: Visible on medium and larger screens */}
-      <div className="hidden md:flex items-center justify-between h-12 px-6">
-        {/* Left Section */}
-        <div className="flex items-center gap-6">
-          <div className="flex items-center gap-2">
-            <Phone className="w-4 h-4 text-gray-500" aria-hidden="true" />
-            <a href="tel:+1234567890" className="hover:text-black">
-              +1 (234) 567-890
-            </a>
-          </div>
-          <div className="flex items-center gap-2">
-            <Mail className="w-4 h-4 text-gray-500" aria-hidden="true" />
-            <a href="mailto:support@rascart.com" className="hover:text-black">
-              support@rascart.com
-            </a>
-          </div>
+    <nav className="bg-[#1c2841] h-16 text-white ">
+      <div className="flex ">
+        <div className="basis-1/4 bg-amber-300">
+          <IceCream />
         </div>
-
-        {/* Center Section */}
-        <div className="flex items-center gap-6">
-          <div className="flex items-center gap-2">
-            <MapPinCheckInside
-              className="w-4 h-4 text-gray-500"
-              aria-hidden="true"
-            />
-            <Link to="/store-locator" className="hover:text-black">
-              Store Location
-            </Link>
-          </div>
-          <div className="flex items-center gap-2">
-            <Bus className="w-4 h-4 text-gray-500" aria-hidden="true" />
-            <Link to="/track-order" className="hover:text-black">
-              Track Order
-            </Link>
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="text-xs font-bold">$</span>
-            <button className="hover:text-black">Dollar (US)</button>
-            {/* Replace with a dropdown or context for currency selection */}
-          </div>
+        <div className="basis-1/2">
+          <ul className=" flex justify-center gap-x-15 pt-2">
+            <li>
+              <Link to="/" className="">
+                Home
+              </Link>
+            </li>
+            <li>
+              <Link to="/about" className="">
+                About
+              </Link>
+            </li>
+            <li>
+              <Link to="/services" className="">
+                Services
+              </Link>
+            </li>
+            <li>
+              <Link to="/pricing" className="">
+                Pricing
+              </Link>
+            </li>
+            <li>
+              <Link to="/contact" className="">
+                Contact
+              </Link>
+            </li>
+          </ul>
         </div>
-
-        {/* Right Section */}
-        <div className="flex items-center gap-4">
-          {!isLoggedIn ? (
-            <>
-              <Link to="/signup" className="hover:text-black">
-                Register
-              </Link>
-              <span className="text-gray-400">|</span>
-              <Link to="/signin" className="hover:text-black">
-                Sign In
-              </Link>
-            </>
-          ) : (
-            <>
-              <Link to="/dashboard" className="hover:text-black">
-                My Account
-              </Link>
-              <button
-                onClick={handleLogout}
-                className="hover:text-black focus:outline-none"
-              >
-                Logout
-              </button>
-            </>
-          )}
+        <div className="basis-1/3">
+          <div className="flex ">
+            {/* search area */}
+            <div className="basis-2/3">
+              <div className="flex items-center bg-white rounded  mt-2">
+                <Input
+                  className="bg-white text-black border-none focus:outline-none focus:ring-0"
+                  placeholder="Search"
+                />
+                <button className="p-2">
+                  <Search className="text-gray-500" />
+                </button>
+              </div>
+            </div>
+            {/* Search area end  */}
+            {/* authentication area */}
+            <div className="basis-">
+              <div className="mt-3 ml-5">
+                <ul>
+                  {isSignIn ? (
+                    <>
+                      <button
+                        onClick={handleSignOut}
+                        className="hidden hover:text-amber-300"
+                      >
+                        Sign Out
+                      </button>
+                      <IoPerson className="text-3xl ml-2 mt-1" />
+                    </>
+                  ) : (
+                    <>
+                      <Link to="/signin" className="">
+                        <Button className="px-10 bg-[#0143f8]">Sign In</Button>
+                      </Link>
+                    </>
+                  )}
+                </ul>
+              </div>
+            </div>
+            {/* authentication areas end  */}
+          </div>
         </div>
       </div>
-    </div>
+    </nav>
   );
-};
+}
 
 export default NavLayout;
+
+// <Link to="/signup" className="hover:text-amber-300">
+//   Sign Up
+// </Link>;
