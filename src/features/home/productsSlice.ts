@@ -1,15 +1,41 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import api_root from "@/api/api_root";
 
+interface ProductImage {
+  id: number; 
+  product: number; 
+  author: number; 
+  is_primary: boolean; 
+  alt_text: string; 
+}
+
+
 interface Product {
   id: number;
+  images: ProductImage[];
   name: string;
   title: string;
-  desc: string;
+  slug: string;
+  description: string;
+  weight: number;
+  sku: string;
   price: string;
-  stock: number;
+  discount_percent: number;
+  warranty_information: string;
+  shipping_information: string;
+  return_policy: string;
+  min_order_quantity: number;
+  unq_num: string;
+  pro_uuid: string;
+  is_available: boolean;
+  is_approved: boolean;
+  rating: number;
+  views_count: number;
+  sold_count: number;
   uid: string;
-  images: { image: string }[];
+  category: number;
+  author: number;
+  meta_tag: number[];
 }
 
 //

@@ -1,19 +1,34 @@
+
+
+
+import { CarIcon, Eye, Heart, ShoppingCart, Star } from "lucide-react";
+import { IoPricetag } from "react-icons/io5";
+
 import type { AppDispatch } from "@/app/store";
 import { Button } from "@/components/ui/button";
 import { addToCart } from "@/features/cart/cartSlice";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
+interface ProductImage {
+  id: number;
+  product: number;
+  author: number; // TODO for fute update and need to show
+  product_image: string;
+  is_primary: boolean;
+  alt_text: string;
+}
+
 interface SpecialOffersProps {
   views: {
     name: string;
     title: string;
-    desc: string;
+    description: string;
     price: string;
     stock: number;
     uid: string;
     slug: string;
-    images: { image: string }[];
+    images: ProductImage[];
   };
 }
 
@@ -27,14 +42,18 @@ const ProductViews = ({ views }: SpecialOffersProps) => {
         name: views.name,
         title: views.title,
         price: views.price,
-        images: views.images,
+
+        images:
+          views.images.length > 0
+            ? [{ product_image: views.images[0].product_image }]
+            : [],
       })
     );
   };
 
   return (
     <section>
-      <div className="bg-white rounded-lg shadow-md overflow-hidden relative">
+      <div className="bg-white rounded-lg shadow-md p-4 relative">
         <Link to={`/product/${views.slug}`}>
           <div className="absolute top-4 left-4 bg-yellow-400 text-white text-sm font-bold py-1 px-2 rounded-full">
             Special Offer
@@ -43,40 +62,89 @@ const ProductViews = ({ views }: SpecialOffersProps) => {
             Save <span className="ml-0.5">$120</span>
           </div>
           <img
-            src={views.images[0]?.image || "https://placehold.co/300x200"}
+            src={
+              views.images &&
+              views.images.length > 0 &&
+              views.images[0]?.product_image
+                ? views.images[0].product_image
+                : "https://placehold.co/300x200"
+            }
             alt={views.name}
             className="h-96 w-full  p-4"
           />
         </Link>
-        <div className="p-4">
-          <Link to={`/product/${views.slug}/`}>
-            <h3 className="text-sm font-semibold text-blue-500 mb-1">
-              {views.name}
-            </h3>
-            <p className="text-xs text-gray-500 mb-1">{views.title}</p>
-          </Link>
+        <div className="pt-6 ">
+          <div className="mb-4 flex items-center justify-between gap-4">
+            <span className="me-2 rounded bg-primary-100 px-2.5 py-0.5 text-xs font-medium text-primary-800 ">
+              {" "}
+              Up to 35% off{" "}
+            </span>
 
-          <div className="flex justify-between mb-2">
-            <div className="mt-1">
-              <span className="text-gray-500 line-through mr-2">$99.00</span>
-            </div>
-            <div>
-              <h1 className="text-red-600 font-bold text-xl ">
-                ${views.price}
-              </h1>
-            </div>
-            <div>
-              <Button
-                className="bg-blue-500 font-bold  px-10"
-                onClick={handleAddtoCart}
+            <div className="flex items-center justify-end gap-1">
+              <button
+                type="button"
+                className="rounded-lg p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-900"
               >
-                Buy Now
-              </Button>
+                <Eye className="h-5 w-5" />
+              </button>
+
+              <button
+                type="button"
+                className="rounded-lg p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-900"
+              >
+                <Heart className="h-5 w-5" />
+              </button>
             </div>
           </div>
-          <div className="flex justify-between text-xs text-gray-600 mb-2">
-            <span>Available: {views.stock}</span>
-            <span>Already Sold: {50 - views.stock}</span>
+          <Link
+            to={`/product/${views.slug}/`}
+            className="text-lg font-semibold leading-tight  hover:underline d"
+          >
+            {views.name}
+          </Link>
+          <div className="mt-2 flex items-center gap-2">
+            <div className="flex items-center">
+              <Star className="h-4 w-4 text-yellow-400" />
+              <Star className="h-4 w-4 text-yellow-400" />
+              <Star className="h-4 w-4 text-yellow-400" />
+            </div>
+
+            <p className="text-sm font-medium text-gray-900 dark:text-white">
+              5.0
+            </p>
+            <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+              (455)
+            </p>
+          </div>
+
+          <ul className="mt-2 flex items-center gap-4">
+            <li className="flex items-center gap-2">
+              <CarIcon className="h-4 w-4  " />
+              <p className="text-sm font-medium  dark:text-gray-400">
+                Fast Delivery
+              </p>
+            </li>
+
+            <li className="flex items-center gap-2">
+              <IoPricetag className="h-4 w-4  dark:text-gray-400" />
+              <p className="text-sm font-medium  dark:text-gray-400">
+                Best Price
+              </p>
+            </li>
+          </ul>
+
+          <div className="mt-4 flex items-center justify-between gap-4">
+            <p className="text-2xl font-extrabold leading-tight  dark:text-white">
+              {views.price}
+            </p>
+
+            <Button
+              className="bg-blue-500 font-bold  px-10 "
+              onClick={handleAddtoCart}
+            >
+              <ShoppingCart className="-ms-2 me-2 h-5 w-5" />
+              Add to cart
+            </Button>
           </div>
         </div>
       </div>

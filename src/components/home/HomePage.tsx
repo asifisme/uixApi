@@ -1,10 +1,14 @@
+import { useSelector } from "react-redux";
 import AddToCart from "../cart/AddToCart";
 import HomePageApi from "./HomePageApi";
+import type { RootState } from "@/app/store";
 
 const HomePage = () => {
-  const isCartExist = true
+  const cart = useSelector((state: RootState) => state.cart.cart);
+  const isCartExist = cart.length > 0;
+
   return (
-    <div className="flex w-full">
+    <div className="flex w-full bg-[#18181b]">
       <div className="grid grid-cols-12">
         <div
           className={`${

@@ -3,10 +3,10 @@ import { X, ShoppingCart, Minus, Plus, Trash2 } from "lucide-react";
 
 interface cart {
   uid: string;
-  // name: string;
-  // price: number;
+  name: string;
+  price: number;
   quantity: number;
-  // images: { image: string }[];
+  images: { image: string }[];
 }
 
 interface AddToCartViewsProps {
@@ -24,41 +24,36 @@ const AddToCartViews = ({
 }: AddToCartViewsProps) => {
   return (
     <section>
-      <Card className={""}>
+      <Card className={"   bg-[#cbd5e1] mt-4 mr-3"}>
         {/* header  */}
-        <div className="flex items-center justify-between px-4 py-6 sm:px-6 border-b">
+        <div className="flex items-center justify-between   border-b">
           <div className="flex items-center gap-2 text-lg font-semibold text-gray-900">
             <ShoppingCart className="w-5 h-5" />
             Shopping Cart
           </div>
-          <button type="button" className="text-gray-400 hover:text-gray-500">
+          <button type="button" className=" hover:text-gray-500">
             <X className="w-6 h-6" />
             <span className="sr-only">Close panel</span>
           </button>
         </div>
         {/* Body */}
-        <div className="flex-1  px-4 py- sm:px-6">
+        <div className="flex-1  px-4 ">
           <ul role="list" className=" ">
             {cart.map((views) => (
               <li key={views.uid} className="flex py-2">
                 <div className="  rounded-md border border-gray-200">
-                  <h1>{views.uid}</h1>
                   <img
                     src={"https://placehold.co/600x400"}
-                    className="h-16 w-full object-cover object-center"
+                    className="h-16 w- object-cover object-center"
                   />
                   <p className="text-center font-bold mt-2">
                     {" "}
                     {views.quantity}
                   </p>
                 </div>
-                <div className="ml-4 flex flex-1 flex-col">
+                <div className="ml-4 flex flex-1 flex-col ">
                   <div className="flex justify-between text-base  text-gray-900">
-                    <p className="font">
-                      {views.name.length > 20
-                        ? views.name.slice(0, 20) + "..."
-                        : views.name}
-                    </p>
+                    <p className="font">{views.name}</p>
                     <p className="ml-4">${views.price}</p>
                   </div>
                   <div className="flex flex-1 items-end justify-between text-sm">
