@@ -1,12 +1,10 @@
-import HomePageApi from "./HomePageApi";
 import AddToCart from "../cart/AddToCart";
-import { useCartContext } from "@/context/CartContext";
+import HomePageApi from "./HomePageApi";
 
 const HomePage = () => {
-  const { isCartExist } = useCartContext();
+  const isCartExist = true
   return (
     <div className="flex w-full">
-      {/* Main content area */}
       <div className="grid grid-cols-12">
         <div
           className={`${

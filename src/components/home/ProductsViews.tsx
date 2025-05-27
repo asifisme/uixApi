@@ -1,5 +1,7 @@
+import type { AppDispatch } from "@/app/store";
 import { Button } from "@/components/ui/button";
-import { useCartContext } from "@/context/CartContext";
+import { addToCart } from "@/features/cart/cartSlice";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
 interface SpecialOffersProps {
@@ -16,16 +18,18 @@ interface SpecialOffersProps {
 }
 
 const ProductViews = ({ views }: SpecialOffersProps) => {
-  const { addToCart } = useCartContext();
+  const dispatch = useDispatch<AppDispatch>();
 
-  const handleBuyNow = () => {
-    addToCart({
-      uid: views.uid,
-      name: views.name,
-      title: views.title,
-      price: views.price,
-      images: views.images[0]?.image, 
-    });
+  const handleAddtoCart = () => {
+    dispatch(
+      addToCart({
+        uid: views.uid,
+        name: views.name,
+        title: views.title,
+        price: views.price,
+        images: views.images,
+      })
+    );
   };
 
   return (
@@ -63,8 +67,8 @@ const ProductViews = ({ views }: SpecialOffersProps) => {
             </div>
             <div>
               <Button
-                onClick={handleBuyNow}
                 className="bg-blue-500 font-bold  px-10"
+                onClick={handleAddtoCart}
               >
                 Buy Now
               </Button>

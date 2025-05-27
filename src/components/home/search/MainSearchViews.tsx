@@ -68,12 +68,12 @@ const MainSearchViews = () => {
             Search
           </button>
         </div>
-          </form>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 ">
-              {product.map((views) => (
-                  <ProductViews key={views.uid} views={views} />
-              ))}
-        </div>
+      </form>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 ">
+        {product.map((views) => (
+          <ProductViews key={views.uid} views={views} />
+        ))}
+      </div>
     </section>
   );
 };

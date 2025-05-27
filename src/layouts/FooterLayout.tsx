@@ -1,15 +1,13 @@
 import { BadgeJapaneseYen, PinIcon } from "lucide-react";
 
-
 const FooterLayout = () => {
   return (
     <>
-      <footer className="relative z-10 bg-white pb-10 pt-20 dark:bg-dark lg:pb-20 lg:pt-[120px]">
+      <footer className="relative z-10 bg-[#8f8484] pb-10 pt-20 dark:bg-dark lg:pb-20 lg:pt-[120px]">
         <div className="container">
           <div className="-mx-4 flex flex-wrap">
             <div className="w-full px-4 sm:w-2/3 lg:w-3/12">
-              <div className="mb-10 w-full">
-              </div>
+              <div className="mb-10 w-full"></div>
             </div>
 
             <LinkGroup header="Resources">
@@ -37,10 +35,10 @@ const FooterLayout = () => {
                   Follow Us On
                 </h4>
                 <div className="mb-6 flex items-center">
-                   <BadgeJapaneseYen />
-                   <PinIcon />
-                    <BadgeJapaneseYen />
-                   <PinIcon />
+                  <BadgeJapaneseYen />
+                  <PinIcon />
+                  <BadgeJapaneseYen />
+                  <PinIcon />
                 </div>
                 <p className="text-base text-body-color dark:text-dark-6">
                   &copy; 2025 TailGrids
@@ -50,12 +48,8 @@ const FooterLayout = () => {
           </div>
         </div>
         <div>
-          <span className="absolute bottom-0 left-0 z-[-1]">
-           
-          </span>
-          <span className="absolute right-10 top-10 z-[-1]">
-           
-          </span>
+          <span className="absolute bottom-0 left-0 z-[-1]"></span>
+          <span className="absolute right-10 top-10 z-[-1]"></span>
         </div>
       </footer>
     </>
@@ -63,8 +57,6 @@ const FooterLayout = () => {
 };
 
 export default FooterLayout;
-
-
 
 const LinkGroup = ({ children, header }) => {
   return (

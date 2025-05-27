@@ -1,5 +1,7 @@
-import AddToCart from "@/components/cart/AddToCart";
+import type { AppDispatch } from "@/app/store";
 import { Button } from "@/components/ui/button";
+import { addToCart } from "@/features/cart/cartSlice";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
 interface newProductgProps {
@@ -16,9 +18,20 @@ interface newProductgProps {
 }
 
 const NewArrivalProductViews = ({ views }: newProductgProps) => {
-  const addtocart = () => {
-    alert('I am clicked')
-  }
+  const dispatch = useDispatch<AppDispatch>();
+
+  const handleAddtoCart = () => {
+    dispatch(
+      addToCart({
+        uid: views.uid,
+        name: views.name,
+        title: views.title,
+        price: views.price,
+        images: views.images,
+      })
+    );
+  };
+
   return (
     <section>
       <div className=" bg-white rounded-lg  overflow-hidden relative">
@@ -64,7 +77,12 @@ const NewArrivalProductViews = ({ views }: newProductgProps) => {
               </ul>
             </div>
             <div>
-              <Button onClick={addtocart} className="bg-blue-500 font-bold  px-10">Buy Now</Button>
+              <Button
+                onClick={handleAddtoCart}
+                className="bg-blue-500 font-bold  px-10"
+              >
+                Buy Now
+              </Button>
             </div>
           </div>
           <div className="flex justify-between text-xs text-gray-600 mb-2">

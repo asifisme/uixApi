@@ -4,38 +4,25 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Link } from "react-router-dom";
-
-import api from "@/api/api_root";
-
+//
+import { signin } from "@/features/auth/signInSlice";
+import type { RootState, AppDispatch } from "@/app/store";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-export function LoginForm({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
+const SignInViews = ({ className, ...props }: React.ComponentProps<"div">) => {
+  // 
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const dispatch = useDispatch<AppDispatch>();
+  const { loading, error } = useSelector((state: RootState) => state.auth_signin);
 
-  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSingin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    console.log("Sending:", { username_or_email:email, password });
-
-    try {
-      const res = await api.post("/signin/", {
-        username_or_email: email,
-        password:password,
-      });
-
-      const { access, refresh } = res.data 
-      
-      localStorage.setItem('access', access)
-      localStorage.setItem('refress', refresh)
-      // alert("Login successful!");
-    } catch (err: any) {
-      alert("Login failed: " + (err.response?.data?.detail || err.message));
-    }
+    dispatch(signin({ username_or_email: email, password: password }));
   };
+
+  // 
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -45,7 +32,7 @@ export function LoginForm({
             <div className="mx-auto">Login to your account</div>
           </CardHeader>
           <CardContent>
-            <form method="post" onSubmit={handleLogin}>
+            <form method="post" onSubmit={handleSingin}>
               handleLogin
               <div className="flex flex-col gap-6">
                 <div className="grid gap-3">
@@ -79,7 +66,8 @@ export function LoginForm({
                 </div>
                 <div className="flex flex-col gap-3">
                   <Button type="submit" className="w-full">
-                    Login
+                    {loading ? "Logging in..." : "Login"}
+                    {error && <p style={{ color: "red" }}>{error}</p>}
                   </Button>
                   <Button variant="outline" className="w-full">
                     Login with Google
@@ -98,4 +86,6 @@ export function LoginForm({
       </div>
     </div>
   );
-}
+};
+
+export default SignInViews;
