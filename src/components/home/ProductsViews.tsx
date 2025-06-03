@@ -1,14 +1,11 @@
-
-
-
 import { CarIcon, Eye, Heart, ShoppingCart, Star } from "lucide-react";
 import { IoPricetag } from "react-icons/io5";
 
 import type { AppDispatch } from "@/app/store";
 import { Button } from "@/components/ui/button";
-import { addToCart } from "@/features/cart/cartSlice";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { createCart } from "@/features/cart/cartThunks";
 
 interface ProductImage {
   id: number;
@@ -33,23 +30,12 @@ interface SpecialOffersProps {
 }
 
 const ProductViews = ({ views }: SpecialOffersProps) => {
-  const dispatch = useDispatch<AppDispatch>();
 
-  const handleAddtoCart = () => {
-    dispatch(
-      addToCart({
-        uid: views.uid,
-        name: views.name,
-        title: views.title,
-        price: views.price,
-
-        images:
-          views.images.length > 0
-            ? [{ product_image: views.images[0].product_image }]
-            : [],
-      })
-    );
-  };
+   const dispatch = useDispatch<AppDispatch>();
+  
+    const handleCreateCart = () => {
+      dispatch(createCart())
+    }
 
   return (
     <section>
@@ -140,7 +126,7 @@ const ProductViews = ({ views }: SpecialOffersProps) => {
 
             <Button
               className="bg-blue-500 font-bold  px-10 "
-              onClick={handleAddtoCart}
+              onClick={handleCreateCart}
             >
               <ShoppingCart className="-ms-2 me-2 h-5 w-5" />
               Add to cart

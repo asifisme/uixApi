@@ -4,37 +4,37 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser, type SignUpPayload } from "@/features/auth/authThunks";
 import type { AppDispatch, RootState } from "@/app/store";
 
-
-// 
+//
 const RegisterForm = ({ className }: React.ComponentProps<"div">) => {
   const dispatch = useDispatch<AppDispatch>();
-  const { loading, error } = useSelector(
+  const { access, loading, error } = useSelector(
     (state: RootState) => state.auth_signup
   );
 
-  // 
+  //
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [conPassword, setConPassword] = useState("");
+  const navigate = useNavigate();
 
-  // 
+  //
   const handleForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (password !== conPassword) {
       alert("Passwords do not match");
       return;
     }
-    const SignUpPayload: SignUpPayload  = {
+    const SignUpPayload: SignUpPayload = {
       first_name: firstName,
       last_name: lastName,
       email: email,
@@ -44,6 +44,22 @@ const RegisterForm = ({ className }: React.ComponentProps<"div">) => {
     };
     dispatch(registerUser(SignUpPayload));
   };
+
+  //
+
+  useEffect(() => {
+    if (access) {
+      navigate("/");
+      // clear form
+      setFirstName("");
+      setLastName("");
+      setEmail("");
+      setUserName("");
+      setPassword("");
+      setConPassword("");
+      navigate("/");
+    }
+  }, [access, navigate]);
 
   return (
     <div className={cn("flex flex-col gap-6", className)}>

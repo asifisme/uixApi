@@ -14,6 +14,7 @@ interface AddToCartViewsProps {
   totalPrice: number;
   handleUpdateQunatity: (uid: string, quantity: number) => void;
   removeFromCart: (uid: string) => void;
+  handleClearCart: () => void; 
 }
 
 const AddToCartViews = ({
@@ -21,6 +22,7 @@ const AddToCartViews = ({
   totalPrice,
   handleUpdateQunatity,
   removeFromCart,
+  handleClearCart, 
 }: AddToCartViewsProps) => {
   return (
     <section>
@@ -32,7 +34,7 @@ const AddToCartViews = ({
             Shopping Cart
           </div>
           <button type="button" className=" hover:text-gray-500">
-            <X className="w-6 h-6" />
+            <X onClick={handleClearCart} className="w-6 h-6" />
             <span className="sr-only">Close panel</span>
           </button>
         </div>
@@ -97,7 +99,7 @@ const AddToCartViews = ({
         <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
           <div className="flex justify-between text-base font-medium text-gray-900">
             <p>Subtotal</p>
-            <p>${totalPrice.toFixed(2)}</p>
+            <p>${totalPrice}</p>
           </div>
           <p className="mt-0.5 text-sm text-gray-500">
             Shipping and taxes calculated at checkout.

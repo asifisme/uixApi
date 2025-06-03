@@ -1,58 +1,60 @@
-import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+// src/features/cart/cartSlice.ts
+import { createSlice } from "@reduxjs/toolkit";
+import { createCart } from "./cartThunks";
 
-interface CartItem {
+export interface Cart {
+  id: number;
   uid: string;
-  name: string;
-  title: string;
-  price: string;
-  images: { image: string }[];
-  quantity: number;
+  author: number;
+  created: string;
+  modified: string;
 }
 
 interface CartState {
-  cart: CartItem[];
+  data: Cart | null;
+  loading: boolean;
+  error: string | null;
 }
 
 const initialState: CartState = {
-  cart: [],
+  data: null,
+  loading: false,
+  error: null,
 };
 
+/**
+ * Redux slice for managing shopping cart state
+ * @remarks
+ * This slice handles the cart creation process with loading states and error handling
+ * 
+ * @property {string} name - The name identifier for the slice
+ * @property {object} initialState - The initial state of the cart
+ * @property {object} reducers - Empty object for standard reducers
+ * @property {function} extraReducers - Builder callback for handling async thunk actions
+ * 
+ * @action createCart.pending - Sets loading to true and clears errors
+ * @action createCart.fulfilled - Updates cart data with API response
+ * @action createCart.rejected - Stores error message from failed request
+ */
 const cartSlice = createSlice({
   name: "cart",
   initialState,
-  reducers: {
-    addToCart: (state, action: PayloadAction<Omit<CartItem, "quantity">>) => {
-      const existing = state.cart.find(
-        (item) => item.uid === action.payload.uid
-      );
-      if (existing) {
-        existing.quantity += 1;
-      } else {
-        state.cart.push({ ...action.payload, quantity: 1 });
-      }
-    },
-    removeFromCart: (state, action: PayloadAction<string>) => {
-      state.cart = state.cart.filter((item) => item.uid !== action.payload);
-    },
-    updateQuantity: (
-      state,
-      action: PayloadAction<{ uid: string; quantity: number }>
-    ) => {
-      const item = state.cart.find((item) => item.uid === action.payload.uid);
-      if (item) {
-        if (action.payload.quantity <= 0) {
-          state.cart = state.cart.filter((i) => i.uid !== item.uid);
-        } else {
-          item.quantity = action.payload.quantity;
-        }
-      }
-    },
-    clearCart: (state) => {
-      state.cart = [];
-    },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(createCart.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(createCart.fulfilled, (state, action) => {
+        state.loading = false;
+        state.data = action.payload;
+      })
+      .addCase(createCart.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      });
   },
 });
 
-export const { addToCart, removeFromCart, updateQuantity, clearCart } =
-  cartSlice.actions;
 export default cartSlice.reducer;

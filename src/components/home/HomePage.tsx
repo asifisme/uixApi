@@ -4,8 +4,8 @@ import HomePageApi from "./HomePageApi";
 import type { RootState } from "@/app/store";
 
 const HomePage = () => {
-  const cart = useSelector((state: RootState) => state.cart.cart);
-  const isCartExist = cart.length > 0;
+  const cart = useSelector((state: RootState) => state.cartHandelar.cart);
+  const isCartExist = cart.length > 0 
 
   return (
     <div className="flex w-full bg-[#18181b]">

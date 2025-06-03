@@ -42,7 +42,7 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    logout: (state) => {
+    signout: (state) => {
       state.access = null;
       state.refresh = null;
       localStorage.removeItem("access");
@@ -67,5 +67,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout } = authSlice.actions;
+export const { signout } = authSlice.actions;
 export default authSlice.reducer;

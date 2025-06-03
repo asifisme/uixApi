@@ -3,26 +3,37 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 //
 import { signin } from "@/features/auth/signInSlice";
 import type { RootState, AppDispatch } from "@/app/store";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 const SignInViews = ({ className, ...props }: React.ComponentProps<"div">) => {
-  // 
+  //
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const { loading, error } = useSelector((state: RootState) => state.auth_signin);
+  const { access, loading, error } = useSelector(
+    (state: RootState) => state.auth_signin
+  );
 
   const handleSingin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(signin({ username_or_email: email, password: password }));
   };
 
-  // 
+  useEffect(() => {
+    if (access) {
+      navigate("/");
+      // clear form
+      setEmail("");
+      setPassword("");
+    }
+  }, [access, navigate]);
+  //
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -67,8 +78,12 @@ const SignInViews = ({ className, ...props }: React.ComponentProps<"div">) => {
                 <div className="flex flex-col gap-3">
                   <Button type="submit" className="w-full">
                     {loading ? "Logging in..." : "Login"}
-                    {error && <p style={{ color: "red" }}>{error}</p>}
                   </Button>
+                  {error && (
+                    <p className="text-red-500 text-sm text-center mt-2">
+                      {error}
+                    </p>
+                  )}
                   <Button variant="outline" className="w-full">
                     Login with Google
                   </Button>

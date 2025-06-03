@@ -1,54 +1,207 @@
-# React + TypeScript + Vite
+# uixapi
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Modern React + TypeScript Frontend for xApi
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Table of Contents
 
-## Expanding the ESLint configuration
+- [Overview](#overview)
+- [Features](#features)
+- [Architecture](#architecture)
+- [Project Structure](#project-structure)
+- [Getting Started](#getting-started)
+- [Available Scripts](#available-scripts)
+- [Tech Stack](#tech-stack)
+- [Folder Structure](#folder-structure)
+- [API Integration](#api-integration)
+- [Development Guidelines](#development-guidelines)
+- [Contributing](#contributing)
+- [License](#license)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Overview
+
+**uixapi** is a modern, modular frontend application built with React, TypeScript, Vite, Redux Toolkit, and Tailwind CSS. It serves as the user interface for the [xApi](../xApi/README.md) backend, providing a seamless experience for e-commerce, authentication, product browsing, and more. The project is designed for scalability, maintainability, and developer productivity, following industry best practices.
+
+---
+
+## Features
+
+- **User Authentication**: Secure sign up, sign in, JWT-based session management, and protected routes.
+- **Product Catalog**: Browse, search, and view detailed product information with images, pricing, and stock status.
+- **Shopping Cart**: Add, update, and remove items from the cart, with persistent state and integration with backend cart APIs.
+- **User Dashboard**: Manage orders, view purchase history, and update user profile information.
+- **Responsive UI**: Fully responsive design using Tailwind CSS and Material UI, optimized for all devices.
+- **API Integration**: All data operations are performed via RESTful API calls to the xApi backend.
+- **Error Handling & Loading States**: User-friendly feedback for all async operations, including loading spinners and error messages.
+- **Type-Safe State Management**: Redux Toolkit and TypeScript ensure robust, maintainable state logic.
+- **Extensible Component Library**: Modular, reusable components for rapid development.
+- **Modern Tooling**: Fast development with Vite, hot module replacement, and strict linting.
+
+---
+
+## Architecture
+
+- **React 19** for UI rendering and component-based architecture.
+- **Redux Toolkit** for global state management, async thunks for API calls, and slice-based logic separation.
+- **TypeScript** for static typing and improved code quality.
+- **Vite** for lightning-fast development and build tooling.
+- **Tailwind CSS** and **Material UI** for styling and UI components.
+- **Axios** for HTTP requests to the backend API.
+- **Radix UI** for accessible, headless UI primitives.
+
+---
+
+## Project Structure
+
+- `src/` – Main source code
+  - `api/` – API utilities and endpoint definitions
+  - `app/` – Redux store configuration and setup
+  - `components/` – Reusable UI components (buttons, forms, modals, etc.)
+  - `dashboard/` – User dashboard views and logic
+  - `features/` – Redux slices and async thunks for domain logic (auth, cart, products, etc.)
+  - `hooks/` – Custom React hooks for shared logic
+  - `layouts/` – Layout components (e.g., RootLayout, AuthLayout)
+  - `lib/` – Utility libraries and helpers
+  - `pages/` – Page-level components (404, landing, etc.)
+  - `post/` – Post-related components and logic
+  - `services/` – Service layer for API abstraction
+  - `styles/` – Global and component-specific styles
+  - `App.tsx` – Main application entry and route definitions
+  - `main.tsx` – React root rendering
+  - `index.css` – Global CSS imports
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- **Node.js** (v18+ recommended)
+- **npm** or **yarn**
+
+### Installation
+
+1. **Clone the repository:**
+   ```bash
+   git clone <repo-url>
+   cd uixapi
+   ```
+2. **Install dependencies:**
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+3. **Start the development server:**
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
+4. **Open in browser:**
+   Visit [http://localhost:5173](http://localhost:5173) (default Vite port)
+
+### Environment Variables
+
+Create a `.env` file in the project root to configure API endpoints and other environment-specific settings. Example:
+
+```env
+VITE_API_BASE_URL=http://localhost:8000/api/
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Available Scripts
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+- `npm run dev` – Start development server with hot reloading
+- `npm run build` – Build for production (output in `dist/`)
+- `npm run preview` – Preview production build locally
+- `npm run lint` – Lint codebase using ESLint
+
+---
+
+## Tech Stack
+
+- **React 19** – Component-based UI
+- **TypeScript** – Static typing
+- **Vite** – Fast dev/build tool
+- **Redux Toolkit** – State management
+- **Tailwind CSS** – Utility-first CSS
+- **Material UI (MUI)** – UI components
+- **Radix UI** – Headless UI primitives
+- **Axios** – HTTP client
+- **Zod** – Schema validation
+
+---
+
+## Folder Structure
+
 ```
+uixapi/
+├── public/                # Static assets (favicon, images, etc.)
+├── src/
+│   ├── api/               # API utilities and endpoint definitions
+│   ├── app/               # Redux store setup
+│   ├── components/        # Reusable UI components
+│   ├── dashboard/         # User dashboard views
+│   ├── features/          # Redux slices/thunks (auth, cart, products, etc.)
+│   ├── hooks/             # Custom React hooks
+│   ├── layouts/           # Layout components
+│   ├── lib/               # Utility libraries
+│   ├── pages/             # Page-level components
+│   ├── post/              # Post-related logic
+│   ├── services/          # API service abstraction
+│   ├── styles/            # Global/component styles
+│   ├── App.tsx            # App entry and routing
+│   ├── main.tsx           # React root
+│   └── index.css          # Global styles
+├── package.json           # Project metadata and scripts
+├── tailwind.config.js     # Tailwind CSS config
+├── vite.config.ts         # Vite config
+└── ...
+```
+
+---
+
+## API Integration
+
+All data is fetched from the [xApi backend](../xApi/README.md) via RESTful endpoints. The base URL is configured via environment variables. Example endpoints:
+
+- `POST /signin/` – User login
+- `POST /signup/` – User registration
+- `GET /product/` – List all products
+- `GET /product/?search=<uid>` – Search for a product by UID
+- `POST /cart/` – Create or update cart
+
+API calls are handled using Axios and Redux async thunks, with error and loading state management for robust UX.
+
+---
+
+## Development Guidelines
+
+- **Component Reusability**: Build modular, reusable components.
+- **Type Safety**: Use TypeScript for all code.
+- **State Management**: Use Redux Toolkit for global state, local state for UI-only logic.
+- **Styling**: Prefer Tailwind CSS utility classes; use MUI/Radix for complex UI.
+- **API Calls**: Use the `api/` and `services/` layers for all HTTP requests.
+- **Testing**: Add tests for critical logic and components (future improvement).
+- **Linting**: Run `npm run lint` before committing.
+
+---
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/YourFeature`)
+3. Commit your changes (`git commit -am 'Add new feature'`)
+4. Push to the branch (`git push origin feature/YourFeature`)
+5. Open a pull request with a clear description
+
+---
+
+## License
+
+This project is licensed under the MIT License.

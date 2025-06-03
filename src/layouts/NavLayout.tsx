@@ -1,90 +1,77 @@
 import { Input } from "@/components/ui/input";
-import { IceCream, Search } from "lucide-react";
+import { Home,  LogOutIcon, Search, ShoppingCart } from "lucide-react";
 import { IoPerson } from "react-icons/io5";
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { useDispatch, useSelector } from "react-redux";
+import type { AppDispatch, RootState } from "@/app/store";
+import { signout } from "@/features/auth/signInSlice";
+import { setIsSignedIn } from "@/features/nav/navSlice";
 
 function NavLayout() {
-  const [isSignIn, setIsSignIn] = useState<boolean>(false);
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
 
-  const checkAuthStatus = () => {
-    const token = localStorage.getItem("access");
-    setIsSignIn(!!token);
-  };
+  const isSignedIn = useSelector((state: RootState)=> state.sign.isSignedIn)
 
   useEffect(() => {
-    checkAuthStatus();
-  }, []);
-
-  const handleSignOut = () => {
-    localStorage.removeItem("access");
-    setIsSignIn(false);
-  };
+    const hasAccess = !!localStorage.getItem("access")
+    dispatch(setIsSignedIn(hasAccess))
+  })
 
   return (
     <nav className="bg-[#1c2841] h-16 text-white ">
       <div className="flex ">
-        <div className="basis-1/4 bg-amber-300">
-          <IceCream />
+        <div className="basis-1/4 ">
+          <div className="flex justify-center">
+            <Link to={"/"}>
+              <Home className=" mt-4 cursor-pointer text-white" />
+            </Link>
+          </div>
         </div>
-        <div className="basis-1/2">
-          <ul className=" flex justify-center gap-x-15 pt-2">
-            <li>
-              <Link to="/" className="">
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link to="/about" className="">
-                About
-              </Link>
-            </li>
-            <li>
-              <Link to="/services" className="">
-                Services
-              </Link>
-            </li>
-            <li>
-              <Link to="/pricing" className="">
-                Pricing
-              </Link>
-            </li>
-            <li>
-              <Link to="/contact" className="">
-                Contact
-              </Link>
-            </li>
-          </ul>
+        <div className="basis-1/2 ">
+          <div className="flex gap-x-4 pt-">
+            <div className="flex items-center bg-white rounded mt-2 px-3 py- w-full shadow-sm">
+              <Input
+                className="flex-grow bg-white text-black border-none focus:outline-none focus:ring-0"
+                placeholder="Search"
+              />
+              <button className="p-2">
+                <Search className="text-gray-500" />
+              </button>
+            </div>
+          </div>
         </div>
         <div className="basis-1/3">
-          <div className="flex ">
-            {/* search area */}
-            <div className="basis-2/3">
-              <div className="flex items-center bg-white rounded  mt-2">
-                <Input
-                  className="bg-white text-black border-none focus:outline-none focus:ring-0"
-                  placeholder="Search"
-                />
-                <button className="p-2">
-                  <Search className="text-gray-500" />
-                </button>
+          <div className="flex justify-center gap-5 ">
+            <div className="">
+              <div className="mt-4">
+                <ShoppingCart  />
               </div>
             </div>
-            {/* Search area end  */}
             {/* authentication area */}
-            <div className="basis-">
+            <div className="">
+
               <div className="mt-3 ml-5">
                 <ul>
-                  {isSignIn ? (
+                  {isSignedIn ? (
                     <>
-                      <button
-                        onClick={handleSignOut}
-                        className="hidden hover:text-amber-300"
-                      >
-                        Sign Out
-                      </button>
-                      <IoPerson className="text-3xl ml-2 mt-1" />
+                      <div className="flex gap-3 items-center">
+                        <div>
+                          <IoPerson className="text-3xl ml-2 mt-1 cursor-pointer text-white hover:text-amber-300 transition-colors duration-200" />
+                        </div>
+                        <div>
+                          <LogOutIcon
+                            onClick={() => {
+                              dispatch(signout());
+                              dispatch(setIsSignedIn(false));
+                              navigate("/signin");
+                            }}
+                            className="text-3xl ml-2 mt-1 cursor-pointer text-white hover:text-red-400 transition-all duration-200 hover:scale-110"
+                          />
+                        </div>
+                      </div>
                     </>
                   ) : (
                     <>
@@ -105,7 +92,3 @@ function NavLayout() {
 }
 
 export default NavLayout;
-
-// <Link to="/signup" className="hover:text-amber-300">
-//   Sign Up
-// </Link>;

@@ -1,8 +1,8 @@
 import { Search } from "lucide-react";
 import { useEffect, useState } from "react";
 
-import api from "@/api/api_root";
 import ProductViews from "../ProductsViews";
+import api_root from "@/api/api_root";
 
 interface PRODUCT {
   id: number;
@@ -21,7 +21,7 @@ const MainSearchViews = () => {
 
   const fetchProduct = async (query: string) => {
     try {
-      const res = await api.get(`product/?search=${query}`);
+      const res = await api_root.get(`product/?search=${query}`);
       setProduct(res.data.results || []);
       console.log(res.data.results);
     } catch (error) {

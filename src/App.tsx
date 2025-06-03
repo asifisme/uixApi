@@ -13,6 +13,7 @@ import MainSearchViews from "./components/home/search/MainSearchViews";
 import SignInViews from "./components/auth/signInViews";
 import SignUpViews from "./components/auth/signUpViews";
 import HomePage from "./components/home/HomePage";
+import ProductDetail from "./components/home/ProductDetail";
 
 function App() {
   const router = createBrowserRouter(
@@ -21,6 +22,7 @@ function App() {
         <Route path="/signin/" element={<SignInViews />} />
         <Route path="/signup/" element={<SignUpViews />} />
         <Route path="/" element={<HomePage />} />
+        <Route path="/product/:uid/" element={<ProductDetail />} />
         <Route path="src" element={<MainSearchViews />} />
         <Route path="post" element={<PostMardem />} />
         <Route path="dashboard" element={<Dashborad />} />
