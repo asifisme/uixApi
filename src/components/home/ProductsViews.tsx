@@ -1,21 +1,33 @@
 import { CarIcon, Eye, Heart, ShoppingCart, Star } from "lucide-react";
 import { IoPricetag } from "react-icons/io5";
-
-import type { AppDispatch } from "@/app/store";
 import { Button } from "@/components/ui/button";
-import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { createCart } from "@/features/cart/cartThunks";
 
 interface ProductImage {
   id: number;
   product: number;
-  author: number; // TODO for fute update and need to show
   product_image: string;
   is_primary: boolean;
   alt_text: string;
 }
 
+/**
+ * Props interface for the SpecialOffers component
+ * @interface SpecialOffersProps
+ * @property {object} views - Product view data object
+ * @property {string} views.name - Name of the product
+ * @property {string} views.title - Title of the product
+ * @property {string} views.description - Description of the product
+ * @property {string} views.price - Price of the product as a string
+ * @property {number} views.stock - Available stock quantity
+ * @property {string} views.uid - Unique identifier for the product
+ * @property {string} views.slug - URL-friendly version of the product name
+ * @property {ProductImage[]} views.images - Array of product images
+ * @property {function} handleAddItem - Function to handle adding items to cart
+ * @param {string} handleAddItem.uid - Product unique identifier
+ * @param {number} handleAddItem.quantity - Quantity to add
+ * @returns {Promise<void> | void} Returns either a Promise or void
+ */
 interface SpecialOffersProps {
   views: {
     name: string;
@@ -27,16 +39,10 @@ interface SpecialOffersProps {
     slug: string;
     images: ProductImage[];
   };
+  handleAddItem: (uid: string, quantity: number) => Promise<void> | void;
 }
 
-const ProductViews = ({ views }: SpecialOffersProps) => {
-
-   const dispatch = useDispatch<AppDispatch>();
-  
-    const handleCreateCart = () => {
-      dispatch(createCart())
-    }
-
+const ProductViews = ({ views, handleAddItem }: SpecialOffersProps) => {
   return (
     <section>
       <div className="bg-white rounded-lg shadow-md p-4 relative">
@@ -126,7 +132,7 @@ const ProductViews = ({ views }: SpecialOffersProps) => {
 
             <Button
               className="bg-blue-500 font-bold  px-10 "
-              onClick={handleCreateCart}
+              onClick={() => handleAddItem(views.uid, 1)}
             >
               <ShoppingCart className="-ms-2 me-2 h-5 w-5" />
               Add to cart

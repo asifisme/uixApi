@@ -47,7 +47,7 @@ interface Product {
 const ProductDetail = () => {
   const { uid } = useParams();
   const dispatch = useDispatch<AppDispatch>();
-  const { productsList, isLoading, fetchError } = useSelector(
+  const { productsList } = useSelector(
     (state: RootState) => state.productDetail
   );
 

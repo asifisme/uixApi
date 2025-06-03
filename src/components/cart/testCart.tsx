@@ -1,35 +1,35 @@
-import type { AppDispatch, RootState } from "@/app/store";
-import { createCart } from "@/features/cart/cartThunks";
 import { useDispatch, useSelector } from "react-redux";
+import type { AppDispatch, RootState } from "@/app/store";
+import { useEffect } from "react";
+import { fetchCartItems } from "@/features/cart/item/cartItemSlice";
 
-const TestCart = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const { data, loading, error } = useSelector(
-    (state: RootState) => state.cart
+const TestCart = () =>{
+  const dispatch = useDispatch<AppDispatch>()
+  const { items, loading, error } = useSelector(
+    (state: RootState) => state.cartItem
   );
-  const handleCreateCart = () => {
-    dispatch(createCart());
-  };
+
+  useEffect(() => {
+    dispatch(fetchCartItems())
+  }, [dispatch])
+
+  
+
+
   return (
-    <div className="p-4">
-      <button
-        onClick={handleCreateCart}
-        disabled={loading}
-        className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
-      >
-        {loading ? "Creating..." : "Create Cart"}
-      </button>
+    <div className="bg-white text-gray-800">
+      <h2 className="">Your Cart Items</h2>
 
-      {error && <p className="text-red-500 mt-2">Error: {error}</p>}
-
-      {data.length > 0 && (
-        <div className="mt-4">
-          <h3 className="font-bold">Cart Created:</h3>
-          <pre className="bg-gray-100 p-3 rounded text-sm">
-            {JSON.stringify(data, null, 2)}
-          </pre>
+      {items.map((item) => (
+        <div key={item.uid}>
+          <p>Product UID: {item.product_uid}</p>
+          <p>Quantity: {item.quantity}</p>
+          <p>Price: {item.price}</p>
+          <p>Active: {item.is_active ? "Yes" : "No"}</p>
+          <p>Created At: {item.created}</p>
+          <hr />
         </div>
-      )}
+      ))}
     </div>
   );
 };

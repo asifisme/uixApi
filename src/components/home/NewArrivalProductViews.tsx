@@ -1,12 +1,7 @@
-import type { AppDispatch, RootState } from "@/app/store";
 import { Button } from "@/components/ui/button";
-import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-
 import { CarIcon, Eye, Heart, ShoppingCart, Star } from "lucide-react";
 import { IoPricetag } from "react-icons/io5";
-import { createCart } from "@/features/cart/cartThunks";
-
 
 /**
  * Represents an image associated with a product.
@@ -53,27 +48,10 @@ interface newProductgProps {
     slug: string;
     images: ProductImage[];
   };
+  handleAddItem: (uid: string, quantity: number) => Promise<void> | void; 
 }
 
-const NewArrivalProductViews = ({ views }: newProductgProps) => {
-  const dispatch = useDispatch<AppDispatch>();
-  const { data } = useSelector((state: RootState) => state.cart);
-  /**
-   * Handles the creation of a new cart.
-   * If a cart already exists (data is not empty), the function returns without action.
-   * Otherwise, it dispatches a createCart action.
-   * @function
-   * @returns {void}  
-   */
-  const handleCreateCart = () => {
-    if (data && Object.keys(data).length > 0) {
-      // alert("Have Already...");
-      return;
-    }
-
-    dispatch(createCart());
-  };
-
+const NewArrivalProductViews = ({ views, handleAddItem }: newProductgProps) => {
   return (
     <section>
       <div className="rounded-lg border border-gray-200 bg-[#fafaf9]   p-3 shadow-sm">
@@ -160,7 +138,7 @@ const NewArrivalProductViews = ({ views }: newProductgProps) => {
 
             <Button
               className="bg-blue-500 font-bold  px-10 "
-              onClick={handleCreateCart}
+              onClick={()=>handleAddItem(views.uid, 1)}
             >
               <ShoppingCart className="-ms-2 me-2 h-5 w-5" />
               Add to cart

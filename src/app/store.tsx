@@ -6,6 +6,7 @@ import productReducer from "../features/home/productsSlice";
 import productDetailReducer from "../features/home/productDetailSlice";
 import cartHanderReducer from "../features/cart/handelar/cartHandelar";
 import cartReducer from "../features/cart/cartSlice";
+import cartItemReducer from "../features/cart/item/cartItemSlice"
 import isSignIn from "../features/nav/navSlice";
 
 //
@@ -18,6 +19,7 @@ export const store = configureStore({
     productDetail: productDetailReducer,
     cartHandelar: cartHanderReducer,
     cart: cartReducer,
+    cartItem: cartItemReducer,
     sign: isSignIn,
   },
 });

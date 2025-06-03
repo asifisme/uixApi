@@ -83,6 +83,14 @@ const cartSlice = createSlice({
   },
 });
 
+/**
+ * Export cart action creators from the cart slice
+ * @exports
+ * @property {Function} addToCart - Action creator to add an item to the cart
+ * @property {Function} removeFromCart - Action creator to remove an item from the cart
+ * @property {Function} updateQuantity - Action creator to update the quantity of an item in the cart
+ * @property {Function} clearCart - Action creator to remove all items from the cart
+ */
 export const { addToCart, removeFromCart, updateQuantity, clearCart } =
   cartSlice.actions;
 export default cartSlice.reducer;

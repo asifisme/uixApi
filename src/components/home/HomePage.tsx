@@ -5,7 +5,7 @@ import type { RootState } from "@/app/store";
 
 const HomePage = () => {
   const cart = useSelector((state: RootState) => state.cartHandelar.cart);
-  const isCartExist = cart.length > 0 
+  const isCartExist = true //cart.length > 0 
 
   return (
     <div className="flex w-full bg-[#18181b]">
