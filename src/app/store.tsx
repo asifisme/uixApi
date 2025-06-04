@@ -4,9 +4,10 @@ import siginInReducer from "../features/auth/signInSlice";
 import singUpReducar from "../features/auth/signUpSlice";
 import productReducer from "../features/home/productsSlice";
 import productDetailReducer from "../features/home/productDetailSlice";
-import cartHanderReducer from "../features/cart/handelar/cartHandelar";
 import cartReducer from "../features/cart/cartSlice";
-import cartItemReducer from "../features/cart/item/cartItemSlice"
+import cartItemReducer from "../features/cart/item/cartItemSlice";
+import orderReducer from "../features/payment/orderSlice";
+import paymentReducer from "../features/payment/paymentSlice";
 import isSignIn from "../features/nav/navSlice";
 
 //
@@ -17,9 +18,10 @@ export const store = configureStore({
     auth_signup: singUpReducar,
     product: productReducer,
     productDetail: productDetailReducer,
-    cartHandelar: cartHanderReducer,
     cart: cartReducer,
+    order: orderReducer,
     cartItem: cartItemReducer,
+    payment: paymentReducer,
     sign: isSignIn,
   },
 });

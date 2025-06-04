@@ -60,8 +60,8 @@ const ProductDetail = () => {
   const views: Product | null =
     productsList && productsList.length > 0 ? productsList[0] : null;
 
-  const cart = useSelector((state: RootState) => state.cart.cart);
-  const isCartExist = cart.length > 0;
+  const item = useSelector((state: RootState)=> state.cartItem.items)
+  const isCartExist = item.length > 0
 
   return (
     <section>

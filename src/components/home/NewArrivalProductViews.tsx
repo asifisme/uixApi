@@ -137,7 +137,7 @@ const NewArrivalProductViews = ({ views, handleAddItem }: newProductgProps) => {
             </p>
 
             <Button
-              className="bg-blue-500 font-bold  px-10 "
+              className="bg-blue-500 font-bold  px-10 cursor-pointer  "
               onClick={()=>handleAddItem(views.uid, 1)}
             >
               <ShoppingCart className="-ms-2 me-2 h-5 w-5" />

@@ -1,5 +1,10 @@
 import { Input } from "@/components/ui/input";
-import { Home,  LogOutIcon, Search, ShoppingCart } from "lucide-react";
+import {
+  Home,
+  LogOutIcon,
+  Search,
+  ShoppingCartIcon,
+} from "lucide-react";
 import { IoPerson } from "react-icons/io5";
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -8,17 +13,21 @@ import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "@/app/store";
 import { signout } from "@/features/auth/signInSlice";
 import { setIsSignedIn } from "@/features/nav/navSlice";
+import { toggleCart } from "@/features/nav/navSlice";
 
 function NavLayout() {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
-  const isSignedIn = useSelector((state: RootState)=> state.sign.isSignedIn)
+  const isSignedIn = useSelector((state: RootState) => state.sign.isSignedIn);
 
   useEffect(() => {
-    const hasAccess = !!localStorage.getItem("access")
-    dispatch(setIsSignedIn(hasAccess))
-  })
+    const hasAccess = !!localStorage.getItem("access");
+    dispatch(setIsSignedIn(hasAccess));
+  });
+
+  const { items } = useSelector((state: RootState) => state.cartItem);
+  const handleCartCount: number = items.length;
 
   return (
     <nav className="bg-[#1c2841] h-16 text-white ">
@@ -47,12 +56,23 @@ function NavLayout() {
           <div className="flex justify-center gap-5 ">
             <div className="">
               <div className="mt-4">
-                <ShoppingCart  />
+                {/* shopping cart badge */}
+                <div
+                  className="relative w-fit cursor-pointer"
+                  onClick={() => dispatch(toggleCart())}
+                >
+                  <ShoppingCartIcon fontSize="small" />
+
+                  {handleCartCount > 0 && (
+                    <span className="absolute -top-2 -right-2 bg-blue-600 text-white text-xs font-bold px-1.5 py-0.5 rounded-full">
+                      {handleCartCount}
+                    </span>
+                  )}
+                </div>
               </div>
             </div>
             {/* authentication area */}
             <div className="">
-
               <div className="mt-3 ml-5">
                 <ul>
                   {isSignedIn ? (

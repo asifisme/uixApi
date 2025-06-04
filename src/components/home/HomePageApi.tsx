@@ -9,7 +9,7 @@ import {
   createCartItem,
   fetchCartItems,
 } from "@/features/cart/item/cartItemSlice";
-
+import { toggleCart } from "@/features/nav/navSlice";
 
 /**
  * Component that fetches and displays product information.
@@ -47,6 +47,8 @@ const HomePageApi = () => {
    * @returns A Promise that resolves when the item has been added to the cart
    */
   const { cart } = useSelector((state: RootState) => state.cart);
+  const isSignedIn = useSelector((state: RootState) => state.sign.isSignedIn);
+
   const token = localStorage.getItem("access");
   const handleAddItem = async (uid: string, quantity: number) => {
     if (!token) {
@@ -58,6 +60,7 @@ const HomePageApi = () => {
     }
     await dispatch(createCartItem({ product_uid: uid, quantity: quantity }));
     dispatch(fetchCartItems());
+    dispatch(toggleCart());
   };
 
   return (

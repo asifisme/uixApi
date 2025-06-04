@@ -1,22 +1,34 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
-interface IsSignedInState {
+interface NavState {
   isSignedIn: boolean;
+  isCartOpen: boolean;
 }
 
-const initialState: IsSignedInState = {
+const initialState: NavState = {
   isSignedIn: false,
+  isCartOpen: false,
 };
 
-const isSignedInSlice = createSlice({
-  name: "isSignedIn",
+const navSlice = createSlice({
+  name: "nav",
   initialState,
   reducers: {
     setIsSignedIn: (state, action: PayloadAction<boolean>) => {
       state.isSignedIn = action.payload;
     },
+    openCart(state) {
+      state.isCartOpen = true;
+    },
+    closeCart(state) {
+      state.isCartOpen = false;
+    },
+    toggleCart(state) {
+      state.isCartOpen = !state.isCartOpen;
+    },
   },
 });
 
-export const { setIsSignedIn } = isSignedInSlice.actions;
-export default isSignedInSlice.reducer;
+export const { setIsSignedIn, openCart, closeCart, toggleCart } =
+  navSlice.actions;
+export default navSlice.reducer;

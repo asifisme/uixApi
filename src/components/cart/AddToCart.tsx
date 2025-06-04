@@ -1,10 +1,10 @@
-import TestCart from "./testCart";
+import AddToCartApi from "./AddToCartApi";
 
 const AddToCart = () => {
   return (
     <section>
-      {/* <AddToCartApi /> */}
-      <TestCart />
+      {/* <TestCart /> */}
+      <AddToCartApi />
     </section>
   );
 };
