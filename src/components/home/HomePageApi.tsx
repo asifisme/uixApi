@@ -10,6 +10,7 @@ import {
   fetchCartItems,
 } from "@/features/cart/item/cartItemSlice";
 
+
 /**
  * Component that fetches and displays product information.
  *

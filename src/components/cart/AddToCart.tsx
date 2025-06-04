@@ -1,4 +1,3 @@
-import AddToCartApi from "./AddToCartApi";
 import TestCart from "./testCart";
 
 const AddToCart = () => {
