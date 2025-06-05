@@ -9,7 +9,6 @@ import {
 import { fetchProdcutApi } from "@/features/home/productsSlice";
 import { closeCart } from "@/features/nav/navSlice";
 
-import { Card } from "../ui/card";
 import { Button } from "../ui/button";
 import { X, ShoppingCart, Minus, Plus, Trash2 } from "lucide-react";
 import { createOrder } from "@/features/payment/orderSlice";

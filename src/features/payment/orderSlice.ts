@@ -6,7 +6,7 @@ interface orderPayload {
   is_confirm: boolean;
 }
 
-// Interface for the response  
+// Interface for the response
 interface Order {
   id: number;
   author: number;
@@ -27,7 +27,7 @@ interface Order {
 interface OrderState {
   loading: boolean;
   error: string | null;
-  order: Order | null;
+  order: Order[];
 }
 
 const api_path = "/order/";
@@ -44,11 +44,24 @@ export const createOrder = createAsyncThunk(
   }
 );
 
+// for get request
+export const fetchOrders = createAsyncThunk(
+  "order/fetch",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await api_root.get(api_path);
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.data);
+    }
+  }
+);
+
 // Initial state
 const initialState: OrderState = {
+  order: [],
   loading: false,
   error: null,
-  order: null,
 };
 
 const orderSlice = createSlice({
@@ -60,13 +73,25 @@ const orderSlice = createSlice({
       .addCase(createOrder.pending, (state) => {
         state.loading = true;
         state.error = null;
-        state.order = null;
       })
       .addCase(createOrder.fulfilled, (state, action) => {
         state.loading = false;
-        state.order = action.payload;
+        state.order = [action.payload]
       })
       .addCase(createOrder.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      //
+      .addCase(fetchOrders.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchOrders.fulfilled, (state, action) => {
+        state.loading = false;
+        state.order = action.payload;
+      })
+      .addCase(fetchOrders.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       });

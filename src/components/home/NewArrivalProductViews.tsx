@@ -3,16 +3,7 @@ import { Link } from "react-router-dom";
 import { CarIcon, Eye, Heart, ShoppingCart, Star } from "lucide-react";
 import { IoPricetag } from "react-icons/io5";
 
-/**
- * Represents an image associated with a product.
- * @interface ProductImage
- * @property {number} id - The unique identifier for the product image.
- * @property {number} product - The identifier of the product this image belongs to.
- * @property {number} author - The identifier of the author who uploaded the image (Future implementation).
- * @property {string} product_image - The URL or path to the product image.
- * @property {boolean} is_primary - Indicates if this is the main/primary image for the product.
- * @property {string} alt_text - Alternative text description of the image for accessibility.
- */
+
 
 interface ProductImage {
   id: number;
@@ -23,19 +14,7 @@ interface ProductImage {
   alt_text: string;
 }
 
-/**
- * Interface representing the props for a new product view component.
- * @interface
- * @property {Object} views - The product view data object
- * @property {string} views.name - The name of the product
- * @property {string} views.title - The title/headline for the product
- * @property {string} views.description - The detailed description of the product
- * @property {string} views.price - The price of the product
- * @property {number} views.stock - The available stock quantity
- * @property {string} views.uid - Unique identifier for the product
- * @property {string} views.slug - URL-friendly version of the product name
- * @property {ProductImage[]} views.images - Array of product images
- */
+
 
 interface newProductgProps {
   views: {

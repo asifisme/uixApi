@@ -2,19 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import api_root from "@/api/api_root";
 
 //
-/**
- * Represents a single item in a shopping cart.
- * @interface CartItem
- * @property {number} id - The unique identifier for the cart item.
- * @property {number} cart_id - The identifier of the cart this item belongs to.
- * @property {string} product_uid - The unique identifier of the product.
- * @property {number} quantity - The quantity of the product in the cart.
- * @property {string} price - The price of the item in string format.
- * @property {boolean} is_active - Flag indicating if the cart item is active.
- * @property {string} uid - The unique identifier string for the cart item.
- * @property {string} created - The timestamp when the cart item was created.
- * @property {string} modified - The timestamp when the cart item was last modified.
- */
+
 export interface CartItem {
   id: number;
   cart_id: number;
@@ -29,25 +17,14 @@ export interface CartItem {
 }
 
 //
-/**
- * Represents the payload for creating a cart item.
- * @interface CreateCartItemPayload
- * @property {string} product_uid - The unique identifier of the product to be added to cart
- * @property {number} quantity - The quantity of the product to be added to cart
- */
+
 export interface CreateCartItemPayload {
   product_uid: string;
   quantity: number;
 }
 
 //
-/**
- * Represents the state of shopping cart items in the application.
- * @interface CartItemState
- * @property {CartItem[]} items - Array of items currently in the cart
- * @property {boolean} loading - Indicates whether cart data is being loaded
- * @property {string | null} error - Error message if cart operation fails, null otherwise
- */
+
 interface CartItemState {
   items: CartItem[];
   loading: boolean;
@@ -55,13 +32,7 @@ interface CartItemState {
 }
 
 //
-/**
- * Initial state for the cart item slice.
- * @type {CartItemState}
- * @property {CartItem[]} items - Array of items in the cart
- * @property {boolean} loading - Loading state indicator for cart operations
- * @property {string | null} error - Error message if any cart operation fails
- */
+
 const initialState: CartItemState = {
   items: [],
   loading: false,

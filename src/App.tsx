@@ -8,12 +8,13 @@ import {
 import RootLayout from "./layouts/RootLayout";
 import NotFound404 from "./pages/NotFound404";
 import PostMardem from "./post/test";
-import Dashborad from "./dashboard/Dashborad";
 import MainSearchViews from "./components/home/search/MainSearchViews";
 import SignInViews from "./components/auth/signInViews";
 import SignUpViews from "./components/auth/signUpViews";
 import HomePage from "./components/home/HomePage";
 import ProductDetail from "./components/home/ProductDetail";
+import AdminUserList from "./components/admin/userList";
+import OrderListApi from "./components/order/orderApi";
 
 function App() {
   const router = createBrowserRouter(
@@ -25,7 +26,8 @@ function App() {
         <Route path="/product/:uid/" element={<ProductDetail />} />
         <Route path="src" element={<MainSearchViews />} />
         <Route path="post" element={<PostMardem />} />
-        <Route path="dashboard" element={<Dashborad />} />
+        <Route path="/user/" element={<AdminUserList />} />
+        <Route path="/orders/" element={<OrderListApi />} />
         <Route path="*" element={<NotFound404 />} />
       </Route>
     )
