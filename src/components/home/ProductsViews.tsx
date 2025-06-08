@@ -11,23 +11,6 @@ interface ProductImage {
   alt_text: string;
 }
 
-/**
- * Props interface for the SpecialOffers component
- * @interface SpecialOffersProps
- * @property {object} views - Product view data object
- * @property {string} views.name - Name of the product
- * @property {string} views.title - Title of the product
- * @property {string} views.description - Description of the product
- * @property {string} views.price - Price of the product as a string
- * @property {number} views.stock - Available stock quantity
- * @property {string} views.uid - Unique identifier for the product
- * @property {string} views.slug - URL-friendly version of the product name
- * @property {ProductImage[]} views.images - Array of product images
- * @property {function} handleAddItem - Function to handle adding items to cart
- * @param {string} handleAddItem.uid - Product unique identifier
- * @param {number} handleAddItem.quantity - Quantity to add
- * @returns {Promise<void> | void} Returns either a Promise or void
- */
 interface SpecialOffersProps {
   views: {
     name: string;

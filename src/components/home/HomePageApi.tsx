@@ -1,3 +1,6 @@
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "@/app/store";
 import { useEffect } from "react";
@@ -10,25 +13,11 @@ import {
   fetchCartItems,
 } from "@/features/cart/item/cartItemSlice";
 import { toggleCart } from "@/features/nav/navSlice";
+import HomePageHero from "./hero/homePageHero";
 
-/**
- * Component that fetches and displays product information.
- *
- * This component handles the main product display functionality by:
- * - Dispatching a product fetch action on mount
- * - Displaying loading and error states
- * - Rendering products in two different grid layouts:
- *   1. New Arrival products section
- *   2. Regular products section
- *
- * @component
- * @returns {JSX.Element} A section containing product grids with loading/error states
- *
- * @example
- * ```tsx
- * <HomePageApi />
- * ```
- */
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
+
 const HomePageApi = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { productsList } = useSelector((state: RootState) => state.product);
@@ -37,17 +26,7 @@ const HomePageApi = () => {
     dispatch(fetchProdcutApi() as any);
   }, [dispatch]);
 
-  /**
-   * Handles adding an item to the shopping cart.
-   * If the cart doesn't exist or is empty, creates a new cart first.
-   * Then adds the specified item to the cart.
-   *
-   * @param uid - The unique identifier of the product to add
-   * @param quantity - The quantity of the product to add
-   * @returns A Promise that resolves when the item has been added to the cart
-   */
   const { cart } = useSelector((state: RootState) => state.cart);
-  const isSignedIn = useSelector((state: RootState) => state.sign.isSignedIn);
 
   const token = localStorage.getItem("access");
   const handleAddItem = async (uid: string, quantity: number) => {
@@ -63,8 +42,28 @@ const HomePageApi = () => {
     dispatch(toggleCart());
   };
 
+  const numberOfSlide = productsList.slice(0, 5);
+
   return (
     <section>
+      <div>
+        <Swiper
+          modules={[Navigation, Pagination, Autoplay]}
+          spaceBetween={30}
+          slidesPerView={1}
+          loop={true}
+          navigation
+          pagination={{ clickable: true }}
+          autoplay={{ delay: 3000 }}
+        >
+          {numberOfSlide.map((views) => (
+            <SwiperSlide key={views.uid}>
+              <HomePageHero views={views} handleAddItem={handleAddItem} />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
+
       {/* New Arival  product start */}
       <div className="grid lg:grid-cols-4 gap-5 m-4 ">
         {productsList.map((views) => (
@@ -76,7 +75,6 @@ const HomePageApi = () => {
         ))}
       </div>
       {/* New Arival  product start */}
-
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 p-4">
         {productsList.map((views) => (
           <ProductViews
