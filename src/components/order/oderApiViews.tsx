@@ -1,5 +1,6 @@
 import type { AppDispatch } from "@/app/store";
 import { createPaymentSession } from "@/features/payment/paymentSlice";
+import { createPayPalPaymentSession } from "@/features/payment/paypalSlice";
 import {
   DollarSign,
   User,
@@ -51,6 +52,23 @@ const OrderListApiViews = ({ views }: ViewsOrder) => {
     const paymentUrl = paymentResult?.payload?.checkout_url;
     if (paymentUrl) {
       window.location.href = paymentUrl;
+    } else {
+      alert("Failed to initiate payment session.");
+    }
+  };
+
+  const handlePayPalPayment = async (is_confirm: boolean) => {
+    if (!token) {
+      alert("Please log in to create an order.");
+      return;
+    }
+
+    const payPalpalResult = await dispatch(
+      createPayPalPaymentSession({ confirm: is_confirm })
+    );
+    const payPalPaymentUrl = payPalpalResult?.payload?.checkout_url;
+    if (payPalPaymentUrl) {
+      window.location.href = payPalPaymentUrl;
     } else {
       alert("Failed to initiate payment session.");
     }
@@ -137,7 +155,16 @@ const OrderListApiViews = ({ views }: ViewsOrder) => {
               onClick={() => handlePayment(true)}
             >
               <CreditCard className="w-5 h-5" />
-              Pay Now
+              Pay Now strip
+            </button>
+          )}
+          {order.payment_status === "unpaid" && (
+            <button
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold shadow-md hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 transition-all duration-200"
+              onClick={() => handlePayPalPayment(true)}
+            >
+              <CreditCard className="w-5 h-5" />
+              Pay Now PayPal
             </button>
           )}
         </div>

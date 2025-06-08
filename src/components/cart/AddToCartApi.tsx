@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "@/app/store";
 import {
@@ -13,6 +13,7 @@ import { Button } from "../ui/button";
 import { X, ShoppingCart, Minus, Plus, Trash2 } from "lucide-react";
 import { createOrder } from "@/features/payment/orderSlice";
 import { createPaymentSession } from "@/features/payment/paymentSlice";
+import { createPayPalPaymentSession } from "@/features/payment/paypalSlice";
 
 // Interfaces
 interface ProductImage {
@@ -37,6 +38,9 @@ const AddToCartApi = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { items } = useSelector((state: RootState) => state.cartItem);
   const { productsList } = useSelector((state: RootState) => state.product);
+  const [paymentMethod, setPaymentMethod] = useState<"stripe" | "paypal">(
+    "stripe"
+  );
 
   useEffect(() => {
     dispatch(fetchCartItems());
@@ -76,9 +80,49 @@ const AddToCartApi = () => {
     return sum + finalPrice * item.quantity;
   }, 0);
 
-  const handleOrder = async (is_confirm: boolean) => {
+  // if (!token) {
+  //   alert("Please log in to create an order.");
+  //   return;
+  // }
+
+  // const payPalpalResult = await dispatch(
+  //   createPayPalPaymentSession({ confirm: is_confirm })
+  // );
+  // const payPalPaymentUrl = payPalpalResult?.payload?.checkout_url;
+  // if (payPalPaymentUrl) {
+  //   window.location.href = payPalPaymentUrl;
+  // } else {
+  //   alert("Failed to initiate payment session.");
+  // }
+
+  const handlePayPalPayment = async (is_confirm: boolean) => {
     if (!token) {
-      alert("Please log in to create an order.");
+      alert("Please Sign in to create an order");
+      return;
+    }
+    const orderResult = await dispatch(createOrder({ is_confirm: is_confirm }));
+    if (orderResult?.meta?.requestStatus === "fulfilled") {
+      const paymentResult = await dispatch(
+        createPayPalPaymentSession({ confirm: is_confirm })
+      );
+      const paymentUrl = paymentResult?.payload?.checkout_url;
+
+      if (paymentUrl) {
+        console.log("Redirecting to payment gateway:", paymentUrl);
+        window.location.href = paymentUrl;
+      } else {
+        console.error("Payment URL not found in response:", paymentResult);
+        alert("Failed to initiate payment session.");
+      }
+    } else {
+      alert("Order creation failed. Please try again.");
+      console.error("Order creation failed:", orderResult);
+    }
+  };
+
+  const handleStripePayment = async (is_confirm: boolean) => {
+    if (!token) {
+      alert("Please Sign in to create an order.");
       return;
     }
     const orderResult = await dispatch(createOrder({ is_confirm: is_confirm }));
@@ -100,6 +144,14 @@ const AddToCartApi = () => {
     } else {
       alert("Order creation failed. Please try again.");
       console.error("Order creation failed:", orderResult);
+    }
+  };
+
+  const handleCheckout = async (is_confirm: boolean) => {
+    if (paymentMethod === "paypal") {
+      await handlePayPalPayment(is_confirm);
+    } else {
+      await handleStripePayment(is_confirm);
     }
   };
 
@@ -200,9 +252,32 @@ const AddToCartApi = () => {
           <p className="mt-0.5 text-sm text-gray-500">
             Shipping and taxes calculated at checkout.
           </p>
+          {/* Payment method selection */}
+          <div className="mt-4 flex gap-4">
+            <label className="flex items-center gap-2">
+              <input
+                type="radio"
+                name="paymentMethod"
+                value="stripe"
+                checked={paymentMethod === "stripe"}
+                onChange={() => setPaymentMethod("stripe")}
+              />
+              Stripe
+            </label>
+            <label className="flex items-center gap-2">
+              <input
+                type="radio"
+                name="paymentMethod"
+                value="paypal"
+                checked={paymentMethod === "paypal"}
+                onChange={() => setPaymentMethod("paypal")}
+              />
+              PayPal
+            </label>
+          </div>
           <div className="mt-6">
             <p
-              onClick={() => handleOrder(true)}
+              onClick={() => handleCheckout(true)}
               className="flex items-center justify-center gap-2 rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 cursor-pointer transition duration-200"
             >
               Checkout

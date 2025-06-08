@@ -8,6 +8,7 @@ import cartReducer from "../features/cart/cartSlice";
 import cartItemReducer from "../features/cart/item/cartItemSlice";
 import orderReducer from "../features/payment/orderSlice";
 import paymentReducer from "../features/payment/paymentSlice";
+import payPalReducer from "../features/payment/paypalSlice";
 import isSignIn from "../features/nav/navSlice";
 
 //
@@ -22,6 +23,7 @@ export const store = configureStore({
     order: orderReducer,
     cartItem: cartItemReducer,
     payment: paymentReducer,
+    paypal: payPalReducer,
     sign: isSignIn,
   },
 });

@@ -5,7 +5,7 @@ const HomePage = () => {
     <div className="flex w-full bg-[#18181b]">
       <div className="grid grid-cols-12">
         <div
-          className={"col-span-12 md:col-start-2 md:col-span-10 md:col-end-12"}
+          className={"col-span-12 md:col-start-3 md:col-span-10 md:col-end-11"}
         >
           <HomePageApi />
         </div>
