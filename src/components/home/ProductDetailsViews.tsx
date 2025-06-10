@@ -1,5 +1,10 @@
 import type { AppDispatch, RootState } from "@/app/store";
 import { createCart } from "@/features/cart/cartThunks";
+import {
+  createCartItem,
+  fetchCartItems,
+} from "@/features/cart/item/cartItemSlice";
+import { toggleCart } from "@/features/nav/navSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 interface ProductImage {
@@ -46,13 +51,20 @@ interface ProductProps {
 
 const ProductDetailsViews = ({ views }: ProductProps) => {
   const dispatch = useDispatch<AppDispatch>();
-  const { data, loading, error } = useSelector(
-    (state: RootState) => state.cart
-  );
-  const handleCreateCart = () => {
-    dispatch(createCart());
+  const { cart } = useSelector((state: RootState) => state.cart);
+  const token = localStorage.getItem("access");
+  const handleAddItem = async (uid: string, quantity: number) => {
+    if (!token) {
+      alert("Please log in to add items to your cart.");
+      return;
+    }
+    if (!cart || Object.keys(cart).length === 0) {
+      await dispatch(createCart());
+    }
+    await dispatch(createCartItem({ product_uid: uid, quantity: quantity }));
+    dispatch(fetchCartItems());
+    dispatch(toggleCart());
   };
-
   return (
     <div className="container mx-auto p-4 md:p-8 font-sans">
       <div className="flex flex-col lg:flex-row gap-8">
@@ -194,13 +206,10 @@ const ProductDetailsViews = ({ views }: ProductProps) => {
             {views.is_available && views.stock > 0 && (
               <>
                 <button
-                  onClick={handleCreateCart}
+                  onClick={() => handleAddItem(views.uid, 1)}
                   className="w-full bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-semibold py-2 px-4 rounded-full mb-2 shadow"
                 >
-                  Add to Cart 
-                </button>
-                <button className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded-full shadow">
-                  Buy Now
+                  Add to Cart
                 </button>
               </>
             )}

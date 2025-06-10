@@ -4,7 +4,8 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import ProductDetailsViews from "./ProductDetailsViews";
-import AddToCart from "../cart/AddToCart";
+
+
 
 interface ProductImage {
   id: number;
@@ -45,6 +46,7 @@ interface Product {
 }
 
 const ProductDetail = () => {
+
   const { uid } = useParams();
   const dispatch = useDispatch<AppDispatch>();
   const { productsList } = useSelector(
@@ -60,28 +62,15 @@ const ProductDetail = () => {
   const views: Product | null =
     productsList && productsList.length > 0 ? productsList[0] : null;
 
-  const item = useSelector((state: RootState)=> state.cartItem.items)
-  const isCartExist = item.length > 0
 
   return (
     <section>
       <div className="flex w-full ">
         <div className="grid grid-cols-12">
-          <div
-            className={`${
-              isCartExist
-                ? "col-span-12 md:col-start-2"
-                : "col-span-12 md:col-start-2 md:col-span-10 md:col-end-12"
-            }  `}
-          >
-            <ProductDetailsViews views={{...views }} />
+          <div className="col-span-12 md:col-start-2 md:col-span-10 md:col-end-12">
+            <ProductDetailsViews views={{ ...views }} />
           </div>
         </div>
-        {isCartExist && (
-          <div className="w-1/5">
-            <AddToCart />
-          </div>
-        )}
       </div>
     </section>
   );

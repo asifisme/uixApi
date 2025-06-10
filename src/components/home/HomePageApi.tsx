@@ -29,6 +29,7 @@ const HomePageApi = () => {
   const { cart } = useSelector((state: RootState) => state.cart);
 
   const token = localStorage.getItem("access");
+  
   const handleAddItem = async (uid: string, quantity: number) => {
     if (!token) {
       alert("Please log in to add items to your cart.");
@@ -42,7 +43,7 @@ const HomePageApi = () => {
     dispatch(toggleCart());
   };
 
-  const numberOfSlide = productsList.slice(0, 5);
+  const numberOfSlide = productsList.slice(0, 15);
 
   return (
     <section>
